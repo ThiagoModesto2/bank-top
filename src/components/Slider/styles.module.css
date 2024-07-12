@@ -1,0 +1,17 @@
+.slideContainer {
+  width: 80%;
+  margin: auto;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.slideContainer img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 767px) {
+  .slideContainer {
+    width: 100%;
+  }
+}
