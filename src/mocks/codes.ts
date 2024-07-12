@@ -57,13 +57,6 @@ const codesData = [
         name: "Casas Bahia",
         image: "/codes/2560px-Casas_Bahia_logo.svg.png",
         code: "",
-        price: 55.00
-    },
-    {
-        id: 9,
-        name: "Casas Bahia",
-        image: "/codes/2560px-Casas_Bahia_logo.svg.png",
-        code: "",
         price: 83.00
     },
 ];

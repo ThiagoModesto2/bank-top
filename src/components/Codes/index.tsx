@@ -53,6 +53,7 @@ export const Codes: FC = () => {
   };
 
   const handleGenerateNewCode = () => {
+    setIsCodeCorrect(false);
     setIsVisible(true);
     const timer = setTimeout(generateCode, 2000);
     return () => clearTimeout(timer);
@@ -91,7 +92,7 @@ export const Codes: FC = () => {
       const timer = setTimeout(() => {
         setIsVisibleModalMoney(false);
         generateProduct();
-      }, 4000);
+      }, 1);
       return () => clearTimeout(timer);
     }
   }, [isVisibleModalMoney]);
@@ -139,17 +140,19 @@ export const Codes: FC = () => {
               />
             </div>
 
-            {isVisible && <RenderLoading />}
-
-            {generatedCode && (
-              <div className={styles.result}>
-                <p
-                  className={styles.code}
-                  onClick={() => copyToClipboard(generatedCode)}
-                >
-                  {generatedCode}
-                </p>
-              </div>
+            {isVisible ? (
+              <RenderLoading />
+            ) : (
+              generatedCode && (
+                <div className={styles.result}>
+                  <p
+                    className={styles.code}
+                    onClick={() => copyToClipboard(generatedCode)}
+                  >
+                    {generatedCode}
+                  </p>
+                </div>
+              )
             )}
 
             <div className={styles.inputWrapper}>
@@ -160,7 +163,11 @@ export const Codes: FC = () => {
                 placeholder="Digite o código"
                 className={styles.input}
               />
-              <Button handleSubmit={handleSubmit} title="Enviar" />
+              <Button
+                handleSubmit={handleSubmit}
+                title="Enviar"
+                disabled={isVisible}
+              />
             </div>
           </>
         )}
