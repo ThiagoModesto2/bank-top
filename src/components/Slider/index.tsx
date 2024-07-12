@@ -14,8 +14,9 @@ export const Slide = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplaySpeed: 2000,
+
     cssEase: "linear",
+    autoplay: true,
   };
 
   return (

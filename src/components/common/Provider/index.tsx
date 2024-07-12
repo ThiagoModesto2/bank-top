@@ -16,11 +16,9 @@ export const Provider: FC<ProviderProps> = ({ children, showMenu }) => {
     <>
       <Header />
       <div id={styles.provider}>
-        <>
-          {children}
-          {showMenu ? <Menu /> : <Footer />}
-        </>
+        <>{children}</>
       </div>
+      {showMenu ? <Menu /> : <Footer />}
     </>
   );
 };
