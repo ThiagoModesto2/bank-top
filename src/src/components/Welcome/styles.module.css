@@ -1,0 +1,46 @@
+#center {
+  border: 4px solid #ff6200;
+  display: block;
+  margin: 0 auto;
+  background-color: white;
+  width: 95%;
+  border-radius: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 22px;
+  text-align: center;
+  padding-top: 20px;
+}
+
+#buttonWrapper {
+  font-size: 20px;
+  width: 288px;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  display: flex;
+  margin: 0 auto;
+  background-color: #ff6200;
+  border: 0;
+  color: white;
+  font-weight: bold;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+.icon {
+  padding: 40px 0;
+}
+
+@media screen and (max-width: 768px) {
+  #buttonWrapper {
+    width: 100% !important;
+  }
+}

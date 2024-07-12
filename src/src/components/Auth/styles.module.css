@@ -1,0 +1,77 @@
+.loginbox {
+  width: 50%;
+  border: 4px solid #ff6200;
+  height: 270px;
+  background-color: white;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  padding: 20px 0;
+}
+
+.popupTextL {
+  text-align: center;
+  color: #4a4a4a;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.insertEmail {
+  text-align: center;
+  color: #4a4a4a;
+  font-size: 15px;
+}
+
+.inputContainer {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#prosseguirButton {
+  font-family: "Arial";
+  background-color: #ff6200;
+  width: 90%;
+  border-radius: 8px;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  display: block;
+  font-weight: bold;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 767px) {
+  .loginbox {
+    width: 90%;
+  }
+}
+
+.loading {
+  margin-top: 20px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #ff6200;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
