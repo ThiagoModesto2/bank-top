@@ -15,22 +15,15 @@ import usePriceStore from "@/store/usePriceStore";
 import styles from "./styles.module.css";
 
 export const Codes: FC = () => {
-  const { price, setPrice } = usePriceStore();
+  const { price, setPrice, productIndex, setProductIndex } = usePriceStore();
 
   const [isVisible, setIsVisible] = useState(false);
   const [loadingProduct, setLoadingProduct] = useState(true);
   const [isVisibleModalMoney, setIsVisibleModalMoney] = useState(false);
   const [isVisibleModalLimit, setIsVisibleModalLimit] = useState(false);
-  const [product, setProduct] = useState<{
-    image: string;
-    name: string;
-    price: number;
-  } | null>(null);
   const [generatedCode, setGeneratedCode] = useState<string | null>(null);
   const [inputCode, setInputCode] = useState<string>("");
   const [isCodeCorrect, setIsCodeCorrect] = useState<boolean | null>(null);
-  const [lastProductIndex, setLastProductIndex] = useState<number | null>(null);
-  const [usedProducts, setUsedProducts] = useState<number[]>([]);
 
   const totalCodesDataPrice = codesData.reduce(
     (acc: any, item: any) => acc + item.price,
@@ -40,27 +33,12 @@ export const Codes: FC = () => {
   const generateProduct = () => {
     setLoadingProduct(true);
 
-    if (usedProducts.length >= codesData.length) {
-      setIsVisibleModalLimit(true);
+    if (productIndex + 1 >= codesData.length) {
+      setLoadingProduct(false);
       return;
     }
 
-    let randomIndex;
-    do {
-      randomIndex = Math.floor(Math.random() * codesData.length);
-    } while (
-      randomIndex === lastProductIndex ||
-      usedProducts.includes(randomIndex)
-    );
-
-    const randomItem = codesData[randomIndex];
-    setProduct({
-      image: randomItem.image,
-      name: randomItem.name,
-      price: randomItem.price,
-    });
-    setLastProductIndex(randomIndex);
-    setUsedProducts((prevUsedProducts) => [...prevUsedProducts, randomIndex]);
+    setProductIndex(productIndex + 1);
     setGeneratedCode(null);
     setInputCode("");
     setIsCodeCorrect(null);
@@ -76,7 +54,8 @@ export const Codes: FC = () => {
 
   const handleGenerateNewCode = () => {
     setIsVisible(true);
-    setTimeout(generateCode, 2000);
+    const timer = setTimeout(generateCode, 2000);
+    return () => clearTimeout(timer);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,37 +66,60 @@ export const Codes: FC = () => {
 
   const handleSubmit = () => {
     if (isCodeCorrect) {
-      setPrice(price + (product?.price ?? 0));
+      setPrice(price + (codesData[productIndex]?.price ?? 0));
       setIsVisibleModalMoney(true);
     } else {
       toast.error("Código incorreto!");
     }
   };
 
+  const copyToClipboard = (code: string) => {
+    navigator.clipboard.writeText(code).then(
+      () => {
+        toast.success("Código copiado!");
+      },
+      (err) => {
+        toast.error("Falha ao copiar o código.");
+      }
+    );
+  };
+
   useEffect(() => {
-    if (price > 0 && totalCodesDataPrice >= price) {
+    if (isVisibleModalMoney) return;
+
+    if (price > 0 && totalCodesDataPrice === price) {
       setIsVisibleModalLimit(true);
-    } else {
-      generateProduct();
+      setProductIndex(0);
     }
-  }, [price]);
+  }, [price, isVisibleModalMoney]);
 
   useEffect(() => {
     if (isVisibleModalMoney) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setIsVisibleModalMoney(false);
         generateProduct();
       }, 4000);
+      return () => clearTimeout(timer);
     }
   }, [isVisibleModalMoney]);
 
+  useEffect(() => {
+    if (productIndex === -1) {
+      setProductIndex(0);
+    } else {
+      setLoadingProduct(false);
+    }
+  }, []);
+
   const RenderLoading = () => <div className={styles.loading}></div>;
+
+  const currentProduct = codesData[productIndex];
 
   return (
     <>
       <PopupMoney
         isVisible={isVisibleModalMoney}
-        codeName={product?.name ?? ""}
+        codeName={currentProduct?.name ?? ""}
       />
       <DailyLimit isVisible={isVisibleModalLimit} />
       <div id={styles.center}>
@@ -125,15 +127,16 @@ export const Codes: FC = () => {
           <RenderLoading />
         ) : (
           <>
-            {product?.image && (
+            {currentProduct?.image && (
               <img
-                src={product.image}
+                src={currentProduct.image}
                 alt="Generated Product"
                 className={styles.image}
               />
             )}
             <p className={styles.text}>
-              Clique no botão abaixo para gerar o seu código {product?.name}.
+              Clique no botão abaixo para gerar o seu código{" "}
+              {currentProduct?.name}.
             </p>
 
             <div id={styles.buttonWrapper}>
@@ -147,7 +150,12 @@ export const Codes: FC = () => {
 
             {generatedCode && (
               <div className={styles.result}>
-                <p className={styles.code}>{generatedCode}</p>
+                <p
+                  className={styles.code}
+                  onClick={() => copyToClipboard(generatedCode)}
+                >
+                  {generatedCode}
+                </p>
               </div>
             )}
 
@@ -156,7 +164,7 @@ export const Codes: FC = () => {
                 type="text"
                 value={inputCode}
                 onChange={handleInputChange}
-                placeholder="Digite o código que foi gerado"
+                placeholder="Digite o código"
                 className={styles.input}
               />
               <Button handleSubmit={handleSubmit} title="Enviar" />
