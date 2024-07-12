@@ -74,14 +74,7 @@ export const Codes: FC = () => {
   };
 
   const copyToClipboard = (code: string) => {
-    navigator.clipboard.writeText(code).then(
-      () => {
-        toast.success("Código copiado!");
-      },
-      (err) => {
-        toast.error("Falha ao copiar o código.");
-      }
-    );
+    navigator.clipboard.writeText(code);
   };
 
   useEffect(() => {
