@@ -92,7 +92,7 @@ export const Codes: FC = () => {
       const timer = setTimeout(() => {
         setIsVisibleModalMoney(false);
         generateProduct();
-      }, 1);
+      }, 4000);
       return () => clearTimeout(timer);
     }
   }, [isVisibleModalMoney]);
