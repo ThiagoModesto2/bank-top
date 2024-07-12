@@ -7,6 +7,7 @@ import { Player } from "@lottiefiles/react-lottie-player";
 
 import Button from "../common/Button";
 import LoadingPopup from "../common/LoadingPopup";
+import { queryParams } from "@/utils/queryParams";
 
 import styles from "./styles.module.css";
 
@@ -17,8 +18,9 @@ const Welcome: FC = () => {
   const handleInit = () => {
     setIsVisible((prev) => !prev);
 
+    const route = queryParams("/codigos");
     setTimeout(() => {
-      router.push("/codigos");
+      router.push(route);
     }, 2000);
   };
 

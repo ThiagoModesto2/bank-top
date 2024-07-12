@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 
 import Button from "../common/Button";
 
+import { queryParams } from "@/utils/queryParams";
+
 import styles from "./styles.module.css";
 
 export const Auth = () => {
@@ -31,8 +33,9 @@ export const Auth = () => {
 
     setIsLoading(true);
 
+    const route = queryParams("/dashboard");
     setTimeout(() => {
-      router.push("/dashboard");
+      router.push(route);
     }, 2000);
   };
 
@@ -53,7 +56,9 @@ export const Auth = () => {
       </div>
 
       {isLoading ? (
-        <div className={styles.loading}></div>
+        <div className={styles.loadingWrapper}>
+          <div className={styles.loading}></div>
+        </div>
       ) : (
         <Button handleSubmit={handleSubmit} title="Entrar" />
       )}

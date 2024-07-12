@@ -11,11 +11,14 @@ import styles from "./styles.module.css";
 interface PopupMoneyProps {
   isVisible: boolean;
   codeName: string;
+  price: number;
 }
 
-export const PopupMoney: FC<PopupMoneyProps> = ({ isVisible, codeName }) => {
-  const { price } = usePriceStore();
-
+export const PopupMoney: FC<PopupMoneyProps> = ({
+  isVisible,
+  codeName,
+  price,
+}) => {
   return (
     <>
       {isVisible && (

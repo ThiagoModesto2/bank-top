@@ -14,6 +14,9 @@ import {
 import Button from "../common/Button";
 import usePriceStore from "@/store/usePriceStore";
 import { formatMoneyBRL } from "@/utils/formatMoneyBRL";
+import { queryParams } from "@/utils/queryParams";
+
+import { checkout } from "@/config/links";
 
 import styles from "./styles.module.css";
 
@@ -25,10 +28,22 @@ export const Withdrawal: FC = () => {
   const [isAmountValid, setIsAmountValid] = useState(true);
 
   const handleGoToPage = () => {
+    if (pixKey === "") {
+      toast.error("Informe a chave pix.");
+      return;
+    }
+
+    if (amount === "") {
+      toast.error("Informe o valor.");
+      return;
+    }
+
     if (!isAmountValid) {
       toast.error("Valor indisponível.");
       return;
     }
+
+    window.location.href = queryParams(checkout);
   };
 
   const handlePixKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -151,7 +166,7 @@ export const Withdrawal: FC = () => {
       <div className={styles.form}>
         {renderInput()}
         <input
-          type="text"
+          type="number"
           value={amount}
           onChange={handleAmountChange}
           placeholder="Digite o valor que deseja sacar"

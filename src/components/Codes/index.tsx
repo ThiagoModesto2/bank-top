@@ -114,6 +114,7 @@ export const Codes: FC = () => {
       <PopupMoney
         isVisible={isVisibleModalMoney}
         codeName={currentProduct?.name ?? ""}
+        price={currentProduct?.price}
       />
       <DailyLimit isVisible={isVisibleModalLimit} />
       <div id={styles.center}>

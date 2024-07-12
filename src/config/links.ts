@@ -1,0 +1,1 @@
+export const checkout = "https://go.perfectpay.com.br/PPU38COQ5BA";

@@ -4,13 +4,16 @@ import { FC } from "react";
 import { FaHome, FaMoneyBill } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
+import { queryParams } from "@/utils/queryParams";
+
 import styles from "./styles.module.css";
 
 export const Menu: FC = () => {
   const router = useRouter();
 
   const navigateTo = (path: string) => {
-    router.push(path);
+    const route = queryParams(path);
+    router.push(route);
   };
 
   return (
