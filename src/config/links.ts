@@ -1,1 +1,1 @@
-export const checkout = "https://go.perfectpay.com.br/PPU38COQ5BA";
+export const checkout = "https://pay.segurospag.com/checkout/9b4cedd5-eae7-4f29-b3f8-279f85c90c03";
